@@ -1,0 +1,15 @@
+
+	/*
+	 * Formula As Typed: <>  p
+	 * The Never Claim Below Corresponds
+	 * To The Negated Formula !(<>  p)
+	 * (formalizing violations of the original)
+	 */
+
+never {    /* !(<>  p) */
+accept_init:
+T0_init:
+	if
+	:: (! ((p))) -> goto T0_init
+	fi;
+}

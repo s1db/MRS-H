@@ -1,0 +1,9 @@
+never property1 {    /* !([] (! (((((incritical[0]==1)) && ((incritical[1]==1))) || (((incritical[0]==1)) && ((incritical[2]==1)))) || (((incritical[1]==1)) && ((incritical[2]==1)))))) */
+T0_init:
+	do
+	:: atomic { (! ((! (((((incritical[0]==1)) && ((incritical[1]==1))) || (((incritical[0]==1)) && ((incritical[2]==1)))) || (((incritical[1]==1)) && ((incritical[2]==1))))))) -> assert(!(! ((! (((((incritical[0]==1)) && ((incritical[1]==1))) || (((incritical[0]==1)) && ((incritical[2]==1)))) || (((incritical[1]==1)) && ((incritical[2]==1)))))))) }
+	:: (1) -> goto T0_init
+	od;
+accept_all:
+	skip
+}
