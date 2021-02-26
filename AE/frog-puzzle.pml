@@ -1,11 +1,10 @@
 #define N 3
 #define MAX 20
-
-int PADS = 2*N+1;
+#define PADS 7
 mtype = {null, red, yellow};
 mtype state[PADS];
-byte moves;
 
+byte moves;
 #define gameOver (\
 	(state[0]==red) && \
 	(state[1]==red) && \
@@ -15,33 +14,32 @@ byte moves;
 	(state[6]==yellow)      \
 	)
 
-
 proctype monitor(){
     do
-    :: assert((!gameOver) || (moves > MAX));
-    od
-}
+    :: assert((!gameOver) || (moves > MAX))
+    od;
+ }
 
 proctype redJumper(byte id){
-    do
+    end:do
     :: atomic{
-            (id > 0) && state[id-1] == null ->
-            state[id-1] = red;
-            state[id] = null;
-            id--;
-            moves++;
-        }
+        (id > 0) && state[id-1] == null ->
+        state[id-1] = red;
+        state[id] = null;
+        id--;
+        moves++;
+    }
     :: atomic{
-            (id-1 > 0) && state[id-2] == null && (state[id-1] != null) ->
-            state[id] = null;
-            state[id-2] = red;
-            id=id-2;
-            moves++;
-        }
+        (id-1 > 0) && state[id-2] == null && (state[id-1] != null) ->
+        state[id] = null;
+        state[id-2] = red;
+        id=id-2;
+        moves++;
+    }
     od;
 }
 proctype yellowJumper(byte id){
-    do
+    end:do
     :: atomic{
         (id < PADS-1) && state[id+1] == null ->
         state[id] = null;
@@ -60,8 +58,8 @@ proctype yellowJumper(byte id){
 }
 
 init{
+    run monitor();
     atomic{
-        run monitor();
         state[PADS/2] = null;
         byte i = 0;
         byte l = 0;
