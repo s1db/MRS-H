@@ -1,10 +1,10 @@
-#define N 3
-#define MAX 20
-#define PADS 7
+#define N 4
+#define MAX 30
+#define PADS 9
 mtype = {null, red, yellow};
 mtype state[PADS];
-
 byte moves;
+
 #define gameOver (\
 	(state[0]==red) && \
 	(state[1]==red) && \
@@ -16,7 +16,22 @@ byte moves;
 
 proctype monitor(){
     do
-    :: assert((!gameOver) || (moves > MAX))
+    ::
+    bool gameOver1;
+    int l = 0; 
+    int r = 0;
+    bool lgo = true;
+    bool rgo = true;
+    atomic{for(l : 0 .. N-1){lgo = lgo && (state[l] == red)}}
+    atomic{for(r : l+1 .. PADS-1){rgo = rgo && (state[r] == yellow)}}
+    gameOver1 = lgo && rgo && (state[PADS/2] == null);
+    l = 0;
+    r = 0;
+    assert((!gameOver1) || (moves > MAX));
+
+/* 
+    assert((!gameOver) || (moves > MAX)) 
+*/
     od;
  }
 
