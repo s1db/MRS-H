@@ -1,18 +1,11 @@
-#define N 4
-#define MAX 30
-#define PADS 9
+#define N 3
+#define MAX 20
+#define PADS ((2*N)+1)
 mtype = {null, red, yellow};
 mtype state[PADS];
 byte moves;
 
-#define gameOver (\
-	(state[0]==red) && \
-	(state[1]==red) && \
-	(state[2]==red) && \
-	(state[4]==yellow)   && \
-	(state[5]==yellow)   && \
-	(state[6]==yellow)      \
-	)
+#define gameOver ((state[0]==red) && (state[1]==red) && (state[2]==red) && (state[4]==yellow) && (state[5]==yellow) && (state[6]==yellow))
 
 proctype monitor(){
     do
@@ -22,11 +15,9 @@ proctype monitor(){
     int r = 0;
     bool lgo = true;
     bool rgo = true;
-    atomic{for(l : 0 .. N-1){lgo = lgo && (state[l] == red)}}
-    atomic{for(r : l+1 .. PADS-1){rgo = rgo && (state[r] == yellow)}}
+    d_step{for(l : 0 .. N-1){lgo = lgo && (state[l] == red)}}
+    d_step{for(r : l+1 .. PADS-1){rgo = rgo && (state[r] == yellow)}}
     gameOver1 = lgo && rgo && (state[PADS/2] == null);
-    l = 0;
-    r = 0;
     assert((!gameOver1) || (moves > MAX));
 
 /* 
@@ -37,14 +28,14 @@ proctype monitor(){
 
 proctype redJumper(byte id){
     end:do
-    :: atomic{
+    :: d_step{
         (id > 0) && state[id-1] == null ->
         state[id-1] = red;
         state[id] = null;
         id--;
         moves++;
     }
-    :: atomic{
+    :: d_step{
         (id-1 > 0) && state[id-2] == null && (state[id-1] != null) ->
         state[id] = null;
         state[id-2] = red;
@@ -55,14 +46,14 @@ proctype redJumper(byte id){
 }
 proctype yellowJumper(byte id){
     end:do
-    :: atomic{
+    :: d_step{
         (id < PADS-1) && state[id+1] == null ->
         state[id] = null;
         state[id+1] = yellow;
         id=id+1;
         moves++;
     }
-    :: atomic{
+    :: d_step{
         (id+1 < PADS-1) && state[id+2] == null && (state[id+1] != null)->
         state[id] = null;
         state[id+2] = yellow;
