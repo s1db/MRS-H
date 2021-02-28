@@ -1,3 +1,18 @@
+/*
+TODO:
+- [ ] Create a working model that jumps b/w states.
+- [ ] Go through specification to see if everything is implemented.
+- [ ] Verify property in part b.
+- [ ] Write report.
+*/
+
+
+
+
+
+
+
+
 #define N 3
 #define MAX 30
 #define PADS 2*N+1

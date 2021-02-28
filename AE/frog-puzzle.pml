@@ -11,7 +11,7 @@ proctype monitor(){
     do
     ::
     bool gameOver1;
-    int l = 0; 
+    int l = 0;
     int r = 0;
     bool lgo = true;
     bool rgo = true;
@@ -19,7 +19,6 @@ proctype monitor(){
     d_step{for(r : l+1 .. PADS-1){rgo = rgo && (state[r] == yellow)}}
     gameOver1 = lgo && rgo && (state[PADS/2] == null);
     assert((!gameOver1) || (moves > MAX));
-
 /* 
     assert((!gameOver) || (moves > MAX)) 
 */
