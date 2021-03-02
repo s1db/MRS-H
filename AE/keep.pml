@@ -1,9 +1,12 @@
 /*
 TODO:
-- [ ] Create a working model that jumps b/w states.
+- [x] Create a working model that jumps b/w states.
 - [ ] Go through specification to see if everything is implemented.
 - [ ] Verify property in part b.
 - [ ] Write report.
+
+Questions for Oana:
+- [ ] 
 */
 
 

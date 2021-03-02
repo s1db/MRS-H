@@ -10,9 +10,10 @@ proctype fact(int n;chan p)
 
 if
    ::(n<=1)->p!1
-   ::(n>=2)->run fact(n-1,child);
-child?my_result;
-  p!(n*my_result)
+   ::(n>=2)->
+      run fact(n-1,child);
+      child?my_result;
+      p!(n*my_result)
 fi
 }
 

@@ -7,7 +7,7 @@ byte moves;
 
 #define gameOver ((state[0]==red) && (state[1]==red) && (state[2]==red) && (state[4]==yellow) && (state[5]==yellow) && (state[6]==yellow))
 
-proctype monitor(){
+active proctype monitor(){
     do
     ::
     bool gameOver1;
@@ -63,7 +63,6 @@ proctype yellowJumper(byte id){
 }
 
 init{
-    run monitor();
     atomic{
         state[PADS/2] = null;
         byte i = 0;
