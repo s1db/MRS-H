@@ -10,15 +10,17 @@ byte moves;
 active proctype monitor(){
     do
     ::
-    bool gameOver1;
-    int l = 0;
-    int r = 0;
-    bool lgo = true;
-    bool rgo = true;
-    d_step{for(l : 0 .. N-1){lgo = lgo && (state[l] == red)}}
-    d_step{for(r : l+1 .. PADS-1){rgo = rgo && (state[r] == yellow)}}
-    gameOver1 = lgo && rgo && (state[PADS/2] == null);
-    assert((!gameOver1) || (moves > MAX));
+    d_step{
+        bool gameOver1;
+        int l = 0;
+        int r = 0;
+        bool lgo = true;
+        bool rgo = true;
+        for(l : 0 .. N-1){lgo = lgo && (state[l] == red)}
+        for(r : l+1 .. PADS-1){rgo = rgo && (state[r] == yellow)}
+        gameOver1 = lgo && rgo && (state[PADS/2] == null);
+        assert((!gameOver1) || (moves > MAX));
+    }
 /* 
     assert((!gameOver) || (moves > MAX)) 
 */

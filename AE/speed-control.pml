@@ -79,7 +79,11 @@ proctype speedContol(){
     brakeToSC?brakeState;
     if
     :: (brakeState == stop) -> SCToWheel!stop,currentSpeed;
-    :: (brakeState == slower) -> SCToWheel!slower,currentSpeed;
+    :: (brakeState == slower) -> 
+        if
+        :: sensorState == off -> SCToWheel!slower,currentSpeed;
+        :: else -> SCToWheel!cruise,currentSpeed;
+        fi;
     :: (sensorState == off && acceleration==faster) -> SCToWheel!faster,currentSpeed;
     :: (sensorState == off && acceleration==none) -> SCToWheel!cruise,currentSpeed;
     :: (sensorState == on && acceleration==faster) -> SCToWheel!cruise,currentSpeed;
